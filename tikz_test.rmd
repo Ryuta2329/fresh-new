@@ -1,0 +1,97 @@
+---
+title: "Hello World"
+author: "Me"
+date: "February 17, 2015"
+output:
+ pdf_document: default
+header-includes: 
+ - \usepackage{tikz}
+ - \usepackage{pgfplots}
+ - \usepgfplotslibrary{external}
+ - \pgfplotsset{width=7cm,compat=1.15}
+ - \usepackage{verbatim}
+---
+
+## TikZ picture
+- Here is a TikZ picutre
+
+\begin{tikzpicture}
+    \draw (0,0) circle (2cm);
+\end{tikzpicture}
+
+- Here is another TikZ picutre
+
+\begin{tikzpicture}
+    \begin{axis}[xmax=9,ymax=9, samples=50]
+        \addplot[blue, ultra thick](x,x*x);
+        \addplot[red,  ultra thick](x*x,x);
+    \end{axis}
+\end{tikzpicture}
+
+
+\begin{figure}[t]
+  \centering\scalebox{0.7}{
+  \input{/home/marcelo/MEGAsync/tex/LB.tex}}
+  \caption{Diferencias entre las linealización de Lineweaver-Burke para las reacciones catalizadas por enzima en ausencia de inhibidor, y en presencia de inhibidores.}
+  \label{fig:LBI}
+\end{figure}
+
+
+```{r, include = FALSE}
+tikzDevice::tikz(here::here("output", "tikz_fig_test.tex"), 
+    width = 5, height = 5.5)
+# 
+# 1) Renaturalización del ADN (datos obtenidos de Wetmur & Davidson, 1968).
+#
+k2 <- 60 * 1571 / 1000 / 1000 # umol^-1 s^-1
+t <- seq( 0, 7, by = 0.01) # min
+P <- 1 / (t * k2 / 4 + 1 / 40) # umole^-1
+f <- P/40
+par( plt = c(.1, .95, .1, .98), 
+    cex.axis = .7, 
+    font.lab = 2, font.axis = 3, 
+    mgp = c( 1.2, .25, 0), tcl = -.2, 
+    family = "serif")
+plot( t, f, type = "l", 
+    xlab = "Tiempo (min)", 
+    ylab = expression(italic(f)), 
+    col = "red")
+grid() # Esto no se lo imprime.
+dev.off()
+```
+
+\begin{figure}[t]
+  \centering\scalebox{0.7}{
+  \input{`r here::here("output", "tikz_fig_test.tex")`}}
+  \caption{Cinetica de desnaturtalizacion del ADN.}
+  \label{fig:ADN}
+\end{figure}
+
+
+\begin{tikzpicture}
+
+    \begin{scope}[blend group = soft light]
+      \fill[red!30!white] ( 90:1.2) circle (2);
+      \fill[green!30!white] (210:1.2) circle (2);
+      \fill[blue!30!white] (330:1.2) circle (2);
+    \end{scope}
+    \node at ( 90:2) {Computer Science};
+    \node at ( 210:2) {Statistics};
+    \node at ( 330:2) {Coding};
+    \node [font=\Large] {Data Science};
+
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+    
+    \begin{scope}[blend group = soft light]
+      \fill[gray!20] (2.5,0) ellipse (1.5 and 3.0);
+      \fill[gray!60] (2.5,0) ellipse (1.5 and 2.0);
+    \end{scope}
+    \node at (3:2) {$C_1 = C_2$};
+
+
+<https://stackoverflow.com/questions/60538691/place-two-tikzpictures-next-to-eachother-latex>
+<https://es.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_1)%E2%80%94Basic_Drawing>
+<https://tex.stackexchange.com/questions/24001/how-to-draw-two-tikz-pictures-that-are-parallel-to-each-other>
